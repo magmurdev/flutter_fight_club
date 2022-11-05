@@ -39,31 +39,27 @@ class _MainPageContent extends StatelessWidget {
             const Expanded(child: SizedBox()),
             FutureBuilder<String?>(
               future: SharedPreferences.getInstance().then(
-                (sharedPreferences) =>
+                    (sharedPreferences) =>
                     sharedPreferences.getString("last_fight_result"),
               ),
               builder: (context, snapshot) {
                 if (!snapshot.hasData || snapshot.data == null) {
                   return const SizedBox();
-                } else {
-                  FightResult fightResult ;
-                  if(snapshot.data.toString() == FightResult.won.result){
-                    fightResult = FightResult.won;
-                  }else if(snapshot.data.toString() == FightResult.lost.result){
-                    fightResult = FightResult.lost;
-                  }else {
-                    fightResult = FightResult.draw;
-                  }
-                  return Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 12),
-                        child: Text("Last fight result"),
-                      ),
-                      FightResultWidget(fightResult: fightResult,),
-                    ],
-                  );
                 }
+                final FightResult fightResult = FightResult.getByName(
+                    snapshot.data!);
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text("Last fight result",
+                    style: TextStyle(
+                      color: FightClubColors.darkGreyText,
+                      fontSize: 14,
+                    ),),
+                    const SizedBox(height: 12),
+                    FightResultWidget(fightResult: fightResult),
+                  ],
+                );
               },
             ),
             const Expanded(child: SizedBox()),
