@@ -34,64 +34,39 @@ class FightResultWidget extends StatelessWidget {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const SizedBox(
-                width: 8,
-              ),
+
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 16),
-                  const Text(
-                    "You",
-                    style: TextStyle(
-                      color: FightClubColors.darkGreyText,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Image.asset(FightClubImages.youAvatar, height: 92, width: 92),
+                  Text('You',
+                      style: TextStyle(color: FightClubColors.darkGreyText)),
+                  SizedBox(height: 12),
+                  Image.asset(FightClubImages.youAvatar, width: 92, height: 92)
                 ],
               ),
               Container(
-                padding:const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
+                decoration: BoxDecoration( color: fightResult.color,
+                    borderRadius: BorderRadius.circular(22)),
+
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 height: 44,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: fightResult.color,
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  child: Center(
-                    child: Text(
-                      fightResult.result.toLowerCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
+                alignment: Alignment.center,
+                child: Text(fightResult.result.toLowerCase(), style: TextStyle(
+                    fontSize: 16,
+                    color: FightClubColors.whiteText,
+                    fontWeight: FontWeight.w400),),
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 16),
-                  const Text(
-                    "Enemy",
-                    style: TextStyle(
-                      color: FightClubColors.darkGreyText,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 16),
+                  Text('Enemy',
+                      style: TextStyle(color: FightClubColors.darkGreyText)),
+                  SizedBox(height: 12),
                   Image.asset(FightClubImages.enemyAvatar,
-                      height: 92, width: 92),
+                      width: 92, height: 92)
                 ],
-              ),
-              const SizedBox(
-                width: 8,
               ),
             ],
           ),

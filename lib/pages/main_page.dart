@@ -18,6 +18,8 @@ class MainPage extends StatelessWidget {
 }
 
 class _MainPageContent extends StatelessWidget {
+  const _MainPageContent({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,63 +30,68 @@ class _MainPageContent extends StatelessWidget {
             const SizedBox(height: 24),
             Center(
               child: Text(
-                "The\nFight\nClub".toUpperCase(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
+                'The\nFight\nClub'.toUpperCase(),
+                style: TextStyle(
                   fontSize: 30,
                   color: FightClubColors.darkGreyText,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
-            const Expanded(child: SizedBox()),
+            Expanded(child: SizedBox()),
             FutureBuilder<String?>(
               future: SharedPreferences.getInstance().then(
-                    (sharedPreferences) =>
-                    sharedPreferences.getString("last_fight_result"),
-              ),
+                  (sharedPreferences) =>
+                      sharedPreferences.getString('last_fight_result')),
               builder: (context, snapshot) {
                 if (!snapshot.hasData || snapshot.data == null) {
                   return const SizedBox();
                 }
-                final FightResult fightResult = FightResult.getByName(
-                    snapshot.data!);
+                final FightResult fightResult;
+                if (snapshot.data! == 'Won') {
+                  fightResult = FightResult.won;
+                } else if (snapshot.data! == 'Lost') {
+                  fightResult = FightResult.lost;
+                } else {
+                  fightResult = FightResult.draw;
+                }
+
+                //       fightResult.  = snapshot.data;
                 return Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text("Last fight result",
-                    style: TextStyle(
-                      color: FightClubColors.darkGreyText,
-                      fontSize: 14,
-                    ),),
+                    const Text(
+                      'Last fight result',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: FightClubColors.darkGreyText,
+                          fontWeight: FontWeight.w400),
+                    ),
                     const SizedBox(height: 12),
-                    FightResultWidget(fightResult: fightResult),
+                    FightResultWidget(
+                      fightResult: fightResult,
+                      //  resultcolor: Color.fromRGBO(3, 136, 0, 1)
+                    ),
                   ],
                 );
               },
             ),
             const Expanded(child: SizedBox()),
             SecondaryActionButton(
-              text: "statistics",
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+                text: 'Statistics'.toUpperCase(),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const StatisticsPage(),
-                  ),
-                );
-              },
-            ),
+                  ));
+                }),
             ActionButton(
-              text: "Start".toUpperCase(),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
+                text: 'Start'.toUpperCase(),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const FightPage(),
-                  ),
-                );
-              },
-              color: FightClubColors.blackButton,
-            ),
-            const SizedBox(height: 16),
+                  ));
+                },
+                color: FightClubColors.blackButton),
+            const SizedBox(height: 24),
           ],
         ),
       ),
